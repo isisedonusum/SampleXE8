@@ -7,14 +7,16 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   XMLDoc, XMLIntf,
-  Unit1;
+  Unit1, Unit3;
 
 type
   TForm2 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -100,6 +102,14 @@ var
 begin
   frmGonder := TForm1.Create(Form2);
   frmGonder.Show();
+end;
+
+procedure TForm2.Button3Click(Sender: TObject);
+var
+  frmMukellef: TForm3;
+begin
+  frmMukellef := TForm3.Create(Form2);
+  frmMukellef.Show();
 end;
 
 end.
