@@ -9,7 +9,8 @@
     <Transaction>1899/12/30 00:00:00.000.624,D:\Deneme\XE8\Test\Project1.dproj=C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2016/11/22 14:37:01.000.670,=D:\Deneme\XE8\EInvoiceEasy\base.xml</Transaction>
     <Transaction>2016/11/22 14:37:28.000.679,=D:\Deneme\XE8\EInvoiceEasy\Unit2.pas</Transaction>
-    <Transaction>2016/12/05 13:28:55.427,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\TaxPayerQuery.pas</Transaction>
-    <Transaction>2016/12/05 13:29:44.563,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit3.pas</Transaction>
+    <Transaction>2016/12/05 13:28:55.000.427,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\TaxPayerQuery.pas</Transaction>
+    <Transaction>2016/12/05 13:29:44.000.563,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit3.pas</Transaction>
+    <Transaction>2016/12/27 23:52:19.688,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit4.pas</Transaction>
   </Transactions>
 </BorlandProject>

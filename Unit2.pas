@@ -6,19 +6,20 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  XMLDoc, XMLIntf,
-  Unit1, Unit3;
+  XMLDoc, XMLIntf;
 
 type
   TForm2 = class(TForm)
     Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
+    cbProfileID: TComboBox;
+    Label1: TLabel;
+    cbInvoiceType: TComboBox;
+    Label2: TLabel;
     procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
+    procedure ChangeNode(parent: IXMLNode; name: String; namespace: String; value: String);
+    procedure MuhatapBilgileri(muhatap: IXMLNode; WebURI,VKNTCKN: string);
   public
     { Public declarations }
   end;
@@ -36,7 +37,7 @@ implementation
 
 {$R *.dfm}
 
-procedure ChangeNode(parent: IXMLNode; name: String; namespace: String;
+procedure TForm2.ChangeNode(parent: IXMLNode; name: String; namespace: String;
   value: String);
 var
   node: IXMLNode;
@@ -79,12 +80,18 @@ begin
   // fatura no
   ChangeNode(parent, 'ID', NS_cbc, 'ISS2016000000001');
 
+  // fatura senaryosu
+  node := parent.ChildNodes.FindNode('ProfileID', NS_cbc);
+  node.Text := cbProfileID.Items[cbProfileID.ItemIndex];
+
   // fatura tipi
   faturatipi := parent.ChildNodes.FindNode('InvoiceTypeCode', NS_cbc);
-  faturatipi.Text := 'SATIS';
+  faturatipi.Text := cbInvoiceType.Items[cbInvoiceType.ItemIndex];
 
   // müþteri
-  musteri := parent.ChildNodes.FindNode('AccountingSupplierParty', NS_cac);
+  MuhatapBilgileri(parent.ChildNodes.FindNode('AccountingCustomerParty', NS_cac),
+                   'http://www.isisbilisim.com.tr',
+                   '4660392430');
 
   // Fatura notu ekle
   new := doc.CreateElement(PR_cbc + ':Note', NS_cbc);
@@ -96,20 +103,16 @@ begin
   doc.SaveToFile('sample.xml');
 end;
 
-procedure TForm2.Button2Click(Sender: TObject);
+procedure TForm2.MuhatapBilgileri(muhatap: IXMLNode; WebURI,VKNTCKN: string);
 var
-  frmGonder: TForm1;
+  node: IXMLNode;
+  new: IXMLNode;
 begin
-  frmGonder := TForm1.Create(Form2);
-  frmGonder.Show();
-end;
-
-procedure TForm2.Button3Click(Sender: TObject);
-var
-  frmMukellef: TForm3;
-begin
-  frmMukellef := TForm3.Create(Form2);
-  frmMukellef.Show();
+  // web adresi
+  muhatap := muhatap.ChildNodes.First;
+  new :=  muhatap.OwnerDocument.CreateElement(PR_cbc + ':WebsiteURI', NS_cbc);
+  new.Text := WebURI;
+  muhatap.ChildNodes.Insert(0, new);
 end;
 
 end.

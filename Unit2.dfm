@@ -11,11 +11,22 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  DesignSize = (
-    635
-    299)
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 86
+    Height = 13
+    Caption = 'Fatura Senaryosu'
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 35
+    Width = 51
+    Height = 13
+    Caption = 'Fatura Tipi'
+  end
   object Button1: TButton
     Left = 288
     Top = 160
@@ -25,23 +36,34 @@ object Form2: TForm2
     TabOrder = 0
     OnClick = Button1Click
   end
-  object Button2: TButton
-    Left = 552
-    Top = 266
-    Width = 75
-    Height = 25
-    Anchors = [akRight, akBottom]
-    Caption = 'G'#246'nder'
+  object cbProfileID: TComboBox
+    Left = 120
+    Top = 5
+    Width = 145
+    Height = 21
+    ItemIndex = 0
     TabOrder = 1
-    OnClick = Button2Click
+    Text = 'TEMELFATURA'
+    Items.Strings = (
+      'TEMELFATURA'
+      'TICARIFATURA'
+      'IHRACAT'
+      'YOLCUBERABERFATURA')
   end
-  object Button3: TButton
-    Left = 288
-    Top = 72
-    Width = 75
-    Height = 25
-    Caption = 'M'#252'kellef'
+  object cbInvoiceType: TComboBox
+    Left = 120
+    Top = 32
+    Width = 145
+    Height = 21
+    ItemIndex = 0
     TabOrder = 2
-    OnClick = Button3Click
+    Text = 'SATIS'
+    Items.Strings = (
+      'SATIS'
+      'IADE'
+      'TEVKIFAT'
+      'ISTISNA'
+      'OZELMATRAH'
+      'IHRACKAYITLI')
   end
 end
