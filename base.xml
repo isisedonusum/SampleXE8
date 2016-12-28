@@ -56,36 +56,8 @@
 	</cac:AccountingSupplierParty>
 	<cac:AccountingCustomerParty>
 		<cac:Party>
-			<cac:PartyIdentification>
-				<cbc:ID schemeID="VKN">7300040015</cbc:ID>
-			</cac:PartyIdentification>
-			<cac:PartyName>
-				<cbc:Name>DrOetker</cbc:Name>
-			</cac:PartyName>
-			<cac:PostalAddress>
-				<cbc:Room/>
-				<cbc:StreetName/>
-				<cbc:BuildingName/>
-				<cbc:BuildingNumber/>
-				<cbc:CitySubdivisionName>Alsancak</cbc:CitySubdivisionName>
-				<cbc:CityName>İZMİR</cbc:CityName>
-				<cbc:PostalZone/>
-				<cbc:Region/>
-				<cac:Country>
-					<cbc:Name>Türkiye</cbc:Name>
-				</cac:Country>
-			</cac:PostalAddress>
-			<cac:PartyTaxScheme>
-				<cac:TaxScheme>
-					<cbc:Name/>
-				</cac:TaxScheme>
-			</cac:PartyTaxScheme>
-			<cac:Contact>
-				<cbc:Telephone/>
-				<cbc:Telefax/>
-				<cbc:ElectronicMail/>
-			</cac:Contact>
-		</cac:Party>
+			<cbc:WebsiteURI>www.isisbilisim.com.tr</cbc:WebsiteURI>
+		</cac:Party>			
 	</cac:AccountingCustomerParty>
 	<cac:PaymentTerms/>
 	<cac:TaxTotal>

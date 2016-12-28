@@ -33,12 +33,12 @@ object Form4: TForm4
     object TabSheet2: TTabSheet
       Caption = 'UBL-TR Olu'#351'tur'
       ImageIndex = 1
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabSheet3: TTabSheet
       Caption = 'G'#246'nder'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 627
       ExplicitHeight = 271
     end
