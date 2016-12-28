@@ -51,11 +51,11 @@ begin
 
   // fatura senaryosu
   node := parent.ChildNodes.FindNode('ProfileID', NS_cbc);
-  node.Text := fatura.Senaryo;
+  node.Text := GetEnumName(TypeInfo(TFaturaSenaryo), Ord(fatura.Senaryo));
 
   // fatura tipi
   faturatipi := parent.ChildNodes.FindNode('InvoiceTypeCode', NS_cbc);
-  faturatipi.Text := fatura.Tipi;
+  faturatipi.Text := GetEnumName(TypeInfo(TFaturaTipi), Ord(fatura.Tipi));
 
   // satýcý
   // muhatap := TMuhatap.Create;
@@ -163,8 +163,8 @@ begin
   AddChildNode(new, NS_cbc, PR_cbc + ':Region', '');
   child := node.OwnerDocument.CreateElement(PR_cac + ':Country', NS_cac);
   new.ChildNodes.Add(child);
-  AddChildNode(child, NS_cbc, PR_cbc + ':Name', muhatap.Ulke);
   AddChildNode(child, NS_cbc, PR_cbc + ':IdentificationCode', muhatap.UlkeKodu);
+  AddChildNode(child, NS_cbc, PR_cbc + ':Name', muhatap.Ulke);
   // vergi dairesi
   child := CreateChildNode(node, NS_cac, PR_cac + ':PartyTaxScheme');
   child := CreateChildNode(child, NS_cac, PR_cac + ':TaxScheme');

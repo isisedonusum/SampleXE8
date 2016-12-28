@@ -11,6 +11,7 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -41,29 +42,13 @@ object Form2: TForm2
     Top = 5
     Width = 145
     Height = 21
-    ItemIndex = 0
     TabOrder = 1
-    Text = 'TEMELFATURA'
-    Items.Strings = (
-      'TEMELFATURA'
-      'TICARIFATURA'
-      'IHRACAT'
-      'YOLCUBERABERFATURA')
   end
   object cbInvoiceType: TComboBox
     Left = 120
     Top = 32
     Width = 145
     Height = 21
-    ItemIndex = 0
     TabOrder = 2
-    Text = 'SATIS'
-    Items.Strings = (
-      'SATIS'
-      'IADE'
-      'TEVKIFAT'
-      'ISTISNA'
-      'OZELMATRAH'
-      'IHRACKAYITLI')
   end
 end

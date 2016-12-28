@@ -14,6 +14,8 @@ type
     WebURI, VKNTCKN, Unvan, Ilce, Il, Ulke, UlkeKodu, VergiDairesi: String end;
 
   type
+    TFaturaSenaryo = (TEMELFATURA, TICARIFATURA, IHRACAT, YOLCUBERABERFATURA);
+    TFaturaTipi = (SATIS, IADE, TEVKIFAT, ISTISNA, OZELMATRAH, IHRACKAYITLI);
     TOlcuBirimleri = (B32, // Kilogram / Metrekare
       BAS, // Bas
       BX, // Kutu
@@ -95,8 +97,8 @@ type
       { Private declarations }
     public
       { Public declarations }
-      Senaryo: String;
-      Tipi: String;
+      Senaryo: TFaturaSenaryo;
+      Tipi: TFaturaTipi;
       BelgePB: String;
       Alici: TMuhatap;
       Kalemler: TKalemler;
