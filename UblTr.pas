@@ -17,6 +17,8 @@ procedure KalemEkle(node: IXMLNode; kalem: TKalem; BelgePB: String);
 function CreateChildNode(node: IXMLNode; namespace, name: String): IXMLNode;
 procedure AddChildNode(node: IXMLNode; namespace, name, value: String);
 procedure MuhatapBilgileri(node: IXMLNode; muhatap: TMuhatap);
+procedure VergiEkle(node: IXMLNode; kalem: TKalem; BelgePB: String); overload;
+procedure VergiEkle(node: IXMLNode; vergi: TVergi; BelgePB: String); overload;
 
 implementation
 
@@ -249,8 +251,18 @@ begin
   child.Text := FloatToStr(kalem.KalemTutar);
 
   // indirim
+  if kalem.IndirimTutar.HasValue then
+  begin
+    child := CreateChildNode(new, NS_cac, PR_cac + ':AllowanceCharge');
+    AddChildNode(child, NS_cbc, PR_cbc + ':ChargeIndicator', 'false');
+    child := CreateChildNode(child, NS_cbc, PR_cbc + ':Amount');
+    child.Text := FloatToStr(kalem.IndirimTutar);
+    child.Attributes['currencyID'] := BelgePB;
+  end;
 
   // vergiler
+  child := CreateChildNode(new, NS_cac, PR_cac + ':TaxTotal');
+  VergiEkle(child, kalem, BelgePB);
 
   // Detay
   child := CreateChildNode(new, NS_cac, PR_cac + ':Item');
@@ -289,6 +301,70 @@ begin
   // <cbc:PriceAmount currencyID="TRL">500</cbc:PriceAmount>
   // </cac:Price>
   // </cac:InvoiceLine>
+end;
+
+procedure VergiEkle(node: IXMLNode; kalem: TKalem; BelgePB: String);
+var
+  child: IXMLNode;
+begin
+  child := CreateChildNode(node, NS_cbc, PR_cbc + ':TaxAmount');
+  child.Text := FloatToStr(kalem.ToplamVergi);
+  child.Attributes['currencyID'] := BelgePB;
+  // KDV
+  VergiEkle(node, kalem.KDV, BelgePB);
+  // OTV
+  VergiEkle(node, kalem.OTV, BelgePB);
+  // <cbc:TaxAmount currencyID="TRL">90</cbc:TaxAmount>
+end;
+
+procedure VergiEkle(node: IXMLNode; vergi: TVergi; BelgePB: String);
+var
+  new: IXMLNode;
+  child: IXMLNode;
+begin
+  if vergi = nil then
+    exit;
+  child := CreateChildNode(node, NS_cac, PR_cac + ':TaxSubtotal');
+  // matrah
+  if vergi.Matrah.HasValue then
+  begin
+    new := CreateChildNode(child, NS_cbc, PR_cbc + ':TaxableAmount');
+    new.Text := FloatToStr(vergi.Matrah);
+    new.Attributes['currencyID'] := BelgePB;
+  end;
+  // vergi tutar
+  new := CreateChildNode(child, NS_cbc, PR_cbc + ':TaxAmount');
+  new.Text := FloatToStr(vergi.Tutar);
+  new.Attributes['currencyID'] := BelgePB;
+  // oran
+  if vergi.Oran.HasValue then
+    AddChildNode(child, NS_cbc, PR_cbc + ':Percent', FloatToStr(vergi.Oran));
+  //vergi bilgileri
+  new := CreateChildNode(child, NS_cac, PR_cac + ':TaxCategory');
+  //muhafiyet bilgisi
+  if vergi.MuafiyetKodu <> '' then
+  begin
+    AddChildNode(new, NS_cbc, PR_cbc + ':TaxExemptionReasonCode',
+      vergi.MuafiyetKodu);
+    AddChildNode(new, NS_cbc, PR_cbc + ':TaxExemptionReason',
+      vergi.MuafiyetAciklama);
+  end;
+  new := CreateChildNode(new, NS_cac, PR_cac + ':TaxScheme');
+  AddChildNode(new, NS_cbc, PR_cbc + ':Name', vergi.Adi);
+  AddChildNode(new, NS_cbc, PR_cbc + ':TaxTypeCode', vergi.Kodu);
+  // <cac:TaxSubtotal>
+  // <cbc:TaxableAmount currencyID="TRL">100</cbc:TaxableAmount>
+  // <cbc:TaxAmount currencyID="TRL">90</cbc:TaxAmount>
+  // <cbc:Percent>18</cbc:Percent>
+  // <cac:TaxCategory>
+  // / <cbc:TaxExemptionReasonCode/>
+  // / <cbc:TaxExemptionReason/>
+  // / <cac:TaxScheme>
+  // / / <cbc:Name>KDV</cbc:Name>
+  // / / <cbc:TaxTypeCode>0015</cbc:TaxTypeCode>
+  // / </cac:TaxScheme>
+  // </cac:TaxCategory>
+  // </cac:TaxSubtotal>
 end;
 
 end.

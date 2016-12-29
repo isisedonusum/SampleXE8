@@ -9,7 +9,8 @@ uses
   Unit3 in 'Unit3.pas' {Form3},
   Unit4 in 'Unit4.pas' {Form4},
   Contracts in 'Contracts.pas',
-  UblTr in 'UblTr.pas';
+  UblTr in 'UblTr.pas',
+  tr.com.isisbilisim.types in 'tr.com.isisbilisim.types.pas';
 
 {$R *.res}
 

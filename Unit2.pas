@@ -45,9 +45,17 @@ begin
   //fatura kalemleri
   fatura.Kalemler := TKalemler.Create;
   kalem := TKalem.Create;
-  kalem.KalemNo := 2;
+  //kalem numarasý 1'den baþlar
+  kalem.KalemNo := 1;
+  kalem.UrunAdi := 'e-Fatura';
   kalem.Miktar := 5;
   kalem.OlcuBirimi := TOlcuBirimleri.C62;
+  kalem.KalemTutar := 100;
+  kalem.BirimFiyat := 21;
+  kalem.IndirimTutar := 5;
+  kalem.KDV := TVergi.Create('0015', 'KDV');
+  kalem.KDV.Oran := 8;
+  kalem.KDV.Oran := 8;
   fatura.Kalemler.Add(kalem);
 
   CreateUblTr(fatura);

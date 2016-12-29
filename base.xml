@@ -92,33 +92,4 @@
 		<cbc:AllowanceTotalAmount currencyID="TRL">0</cbc:AllowanceTotalAmount>
 		<cbc:PayableAmount currencyID="TRL">590</cbc:PayableAmount>
 	</cac:LegalMonetaryTotal>
-	<cac:InvoiceLine>
-		<cbc:ID>1</cbc:ID>
-		<cbc:Note/>
-		<cbc:InvoicedQuantity unitCode="NIU">1</cbc:InvoicedQuantity>
-		<cbc:LineExtensionAmount currencyID="TRL">500</cbc:LineExtensionAmount>
-		<cac:AllowanceCharge>
-			<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
-			<cbc:Amount currencyID="TRL">0</cbc:Amount>
-		</cac:AllowanceCharge>
-		<cac:TaxTotal>
-			<cbc:TaxAmount currencyID="TRL">90</cbc:TaxAmount>
-			<cac:TaxSubtotal>
-				<cbc:TaxAmount currencyID="TRL">90</cbc:TaxAmount>
-				<cbc:Percent>18</cbc:Percent>
-				<cac:TaxCategory>
-					<cbc:TaxExemptionReason/>
-					<cac:TaxScheme>
-						<cbc:TaxTypeCode>0015</cbc:TaxTypeCode>
-					</cac:TaxScheme>
-				</cac:TaxCategory>
-			</cac:TaxSubtotal>
-		</cac:TaxTotal>
-		<cac:Item>
-			<cbc:Name>Test</cbc:Name>
-		</cac:Item>
-		<cac:Price>
-			<cbc:PriceAmount currencyID="TRL">500</cbc:PriceAmount>
-		</cac:Price>
-	</cac:InvoiceLine>
 </Invoice>

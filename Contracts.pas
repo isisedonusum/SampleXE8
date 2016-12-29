@@ -3,17 +3,15 @@ unit Contracts;
 interface
 
 uses
-  SysUtils, System.Classes;
+  SysUtils, System.Classes, tr.com.isisbilisim.types;
 
 type
+
   TMuhatap = class
-  private
-    { Private declarations }
   public
     { Public declarations }
     WebURI, VKNTCKN, Unvan, Ilce, Il, Ulke, UlkeKodu, VergiDairesi: String end;
 
-  type
     TFaturaSenaryo = (TEMELFATURA, TICARIFATURA, IHRACAT, YOLCUBERABERFATURA);
     TFaturaTipi = (SATIS, IADE, TEVKIFAT, ISTISNA, OZELMATRAH, IHRACKAYITLI);
     TOlcuBirimleri = (B32, // Kilogram / Metrekare
@@ -69,42 +67,62 @@ type
       _26 // Ton
       );
 
-    TKalem = class
-    private
-      { Private declarations }
+    TVergi = class
     public
-      { Public declarations }
-      KalemNo: Integer;
-      Notlar: TStringList;
-      Miktar: Double;
-      OlcuBirimi: TOlcuBirimleri;
-      KalemTutar: Currency;
-      UrunAdi: String;
-      BirimFiyat: Currency;
+      Matrah: Nullable<Currency>;
+      Kodu: String;
+      Adi: String;
+      Oran: Nullable<Double>;
+      Tutar: Currency;
+      MuafiyetKodu: String;
+      MuafiyetAciklama: String;
+      constructor Create(kodu, adi: String);
     end;
 
-    TKalemler = class(TList)
-    private
-      function Get(Index: Integer): TKalem;
-    public
-      destructor Destroy; override;
-      function Add(Value: TKalem): Integer;
-      property Items[Index: Integer]: TKalem read Get; default;
-    end;
+  TKalem = class
+  public
+    { Public declarations }
+    KalemNo: Integer;
+    Notlar: TStringList;
+    Miktar: Double;
+    OlcuBirimi: TOlcuBirimleri;
+    IndirimTutar: Nullable<Currency>;
+    KalemTutar: Currency;
+    UrunAdi: String;
+    BirimFiyat: Currency;
+    KDV: TVergi;
+    OTV: TVergi;
+    ToplamVergi: Currency;
+  end;
 
-    TFatura = class
-    private
-      { Private declarations }
-    public
-      { Public declarations }
-      Senaryo: TFaturaSenaryo;
-      Tipi: TFaturaTipi;
-      BelgePB: String;
-      Alici: TMuhatap;
-      Kalemler: TKalemler;
-    end;
+  TKalemler = class(TList)
+  private
+    function Get(Index: Integer): TKalem;
+  public
+    destructor Destroy; override;
+    function Add(Value: TKalem): Integer;
+    property Items[Index: Integer]: TKalem read Get; default;
+  end;
+
+  TFatura = class
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    Senaryo: TFaturaSenaryo;
+    Tipi: TFaturaTipi;
+    BelgePB: String;
+    Alici: TMuhatap;
+    Kalemler: TKalemler;
+  end;
 
 implementation
+
+constructor TVergi.Create(kodu, adi: String);
+begin
+  self.Kodu := kodu;
+  self.Adi := adi;
+end;
 
 function TKalemler.Add(Value: TKalem): Integer;
 begin
