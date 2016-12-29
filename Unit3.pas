@@ -44,7 +44,7 @@ begin
   UserList := Service.GetListByVknList(VKNTCKNList);
   for i := Low(UserList) to High(UserList) do
   begin
-    Memo2.Lines.Add(UserList[i].Alias);
+    Memo2.Lines.Add(UserList[i].Title + ' ' + UserList[i].Alias);
   end;
 end;
 
