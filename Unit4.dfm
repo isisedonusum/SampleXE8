@@ -20,11 +20,15 @@ object Form4: TForm4
     Top = 0
     Width = 774
     Height = 483
-    ActivePage = TabSheet3
+    ActivePage = TabSheet2
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Bilgiler'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabSheet2: TTabSheet
       Caption = 'UBL-TR Olu'#351'tur'

@@ -91,13 +91,13 @@ type
 
   TKalem = class
   public
-    { Public declarations }
     KalemNo: Integer;
     Notlar: TStringList;
     Miktar: Double;
     OlcuBirimi: TOlcuBirimleri;
     IndirimTutar: Nullable<Currency>;
     KalemTutar: Currency;
+    UrunKodu: String;
     UrunAdi: String;
     BirimFiyat: Currency;
     Vergiler: TVergiler;
@@ -116,7 +116,8 @@ type
   private
     { Private declarations }
   public
-    { Public declarations }
+    No: String;
+    ETTN: String;
     Senaryo: TFaturaSenaryo;
     Tipi: TFaturaTipi;
     BelgePB: String;
@@ -129,6 +130,8 @@ type
     VergiHaricTutar: Currency;
     ToplamIndirim: Currency;
     OdenecekTutar: Currency;
+    constructor Create(); overload;
+    constructor Create(ETTN: String); overload;
     procedure BaslikVergileriHesapla;
   end;
 
@@ -190,6 +193,23 @@ begin
   Result := TKalem(inherited Get(Index));
 end;
 
+constructor TFatura.Create();
+var
+  Uid: TGuid;
+begin
+  CreateGuid(Uid);
+  self.ETTN := GuidToString(Uid);
+  self.ETTN := StringReplace(ETTN, '{', '', [rfReplaceAll]);
+  self.ETTN := StringReplace(ETTN, '}', '', [rfReplaceAll]);
+
+end;
+
+constructor TFatura.Create(ETTN: String);
+
+begin
+  self.ETTN := ETTN;
+end;
+
 procedure TFatura.BaslikVergileriHesapla;
 var
   mevcut, yeni: TVergi;
@@ -198,8 +218,8 @@ begin
   if self.Kalemler = nil then
     raise Exception.Create('Fatura kalemi bulunamadý!');
   self.Vergiler := TVergiler.Create;
-  for i := 0 to self.Kalemler.Count -1 do
-    for j := 0 to self.Kalemler[i].Vergiler.Count-1 do
+  for i := 0 to self.Kalemler.Count - 1 do
+    for j := 0 to self.Kalemler[i].Vergiler.Count - 1 do
     begin
       mevcut := self.Vergiler.MevcutMu(self.Kalemler[i].Vergiler[j]);
       if mevcut = nil then
@@ -222,7 +242,7 @@ var
   i: Integer;
 begin
   Result := nil;
-  for i := 0 to self.Count-1 do
+  for i := 0 to self.Count - 1 do
     if (self[i].Kodu = vergi.Kodu) and (self[i].Oran = vergi.Oran) and
       (self[i].MuafiyetKodu = vergi.MuafiyetKodu) and
       (self[i].MuafiyetAciklama = vergi.MuafiyetAciklama) then

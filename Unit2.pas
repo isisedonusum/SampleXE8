@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.TypInfo;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.TypInfo, Vcl.Grids,
+  Vcl.Mask;
 
 type
   TForm2 = class(TForm)
@@ -14,6 +15,19 @@ type
     Label1: TLabel;
     cbInvoiceType: TComboBox;
     Label2: TLabel;
+    StringGrid1: TStringGrid;
+    txKalemToplamTutar: TEdit;
+    Label3: TLabel;
+    txNo: TMaskEdit;
+    Label4: TLabel;
+    txVergiHaricTutar: TEdit;
+    Label5: TLabel;
+    txVergiDahilTutar: TEdit;
+    Label6: TLabel;
+    Label7: TLabel;
+    txToplamIndirim: TEdit;
+    Label8: TLabel;
+    txOdenecekTutar: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -39,6 +53,7 @@ var
   vergi: TVergi;
 begin
   fatura := TFatura.Create;
+  fatura.No := txNo.Text;
   fatura.Senaryo := TFaturaSenaryo(GetEnumValue(TypeInfo(TFaturaSenaryo),
     cbProfileID.Items[cbProfileID.ItemIndex]));
   fatura.Tipi := TFaturaTipi(GetEnumValue(TypeInfo(TFaturaTipi),
@@ -60,24 +75,29 @@ begin
   fatura.Kalemler := TKalemler.Create;
   kalem := TKalem.Create;
   kalem.KalemNo := 1; // kalem numarasý 1'den baþlar
+  kalem.UrunKodu := '001';
   kalem.UrunAdi := 'e-Fatura';
   kalem.Miktar := 5;
   kalem.OlcuBirimi := TOlcuBirimleri.C62;
-  kalem.KalemTutar := 100;
   kalem.BirimFiyat := 21;
   kalem.IndirimTutar := 5;
+  kalem.KalemTutar := 100;
   kalem.Vergiler := TVergiler.Create;
   //vergi
   vergi :=  TVergi.Create('0015', 'KDV');
   vergi.Oran := 8;
   kalem.Vergiler.Add(vergi);
-  //vergi 2
-  vergi :=  TVergi.Create('0015', 'KDV');
-  vergi.Oran := 18;
-  kalem.Vergiler.Add(vergi);
+
   fatura.Kalemler.Add(kalem);
   //baþlýk vergileri manuel de atanabilir
   fatura.BaslikVergileriHesapla;
+
+  fatura.KalemToplamTutar := StrToCurr(txKalemToplamTutar.Text);
+  fatura.VergiHaricTutar := StrToCurr(txVergiHaricTutar.Text);;
+  fatura.VergiDahilTutar := StrToCurr(txVergiDahilTutar.Text);;
+  fatura.ToplamIndirim := StrToCurr(txToplamIndirim.Text);;
+  fatura.OdenecekTutar := StrToCurr(txOdenecekTutar.Text);;
+
 
   CreateUblTr(fatura);
 end;
@@ -95,6 +115,15 @@ begin
   for i := Ord(Low(TFaturaTipi)) to Ord(High(TFaturaTipi)) do
     cbInvoiceType.Items.Add(GetEnumName(TypeInfo(TFaturaTipi), i));
   cbInvoiceType.ItemIndex := 0;
+
+  //Kalem grid
+  StringGrid1.Cells[0,0] := 'Ürün Kodu';
+  StringGrid1.Cells[1,0] := 'Ürün';
+  StringGrid1.Cells[2,0] := 'B.Fiyat';
+  StringGrid1.Cells[3,0] := 'Miktar';
+  StringGrid1.Cells[4,0] := 'ÖlçüBrm';
+  StringGrid1.Cells[5,0] := 'Ýsk.Orn.';
+  StringGrid1.Cells[6,0] := 'Ýskonto';
 end;
 
 end.
