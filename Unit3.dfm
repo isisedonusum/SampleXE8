@@ -11,6 +11,10 @@ object Form3: TForm3
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
+  DesignSize = (
+    635
+    299)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -25,6 +29,7 @@ object Form3: TForm3
     Top = 27
     Width = 185
     Height = 89
+    Anchors = [akLeft, akTop, akBottom]
     Lines.Strings = (
       '4660392430')
     TabOrder = 0
@@ -34,15 +39,22 @@ object Form3: TForm3
     Top = 122
     Width = 75
     Height = 25
+    Anchors = [akLeft, akBottom]
     Caption = 'Sorgula'
     TabOrder = 1
     OnClick = Button1Click
   end
-  object Memo2: TMemo
+  object StringGrid1: TStringGrid
     Left = 207
     Top = 27
-    Width = 410
+    Width = 420
     Height = 264
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    ColCount = 7
+    FixedCols = 0
+    RowCount = 1
+    FixedRows = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing]
     TabOrder = 2
   end
   object HTTPRIO1: THTTPRIO
