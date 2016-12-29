@@ -67,17 +67,27 @@ type
       _26 // Ton
       );
 
-    TVergi = class
-    public
-      Matrah: Nullable<Currency>;
-      Kodu: String;
-      Adi: String;
-      Oran: Nullable<Double>;
-      Tutar: Currency;
-      MuafiyetKodu: String;
-      MuafiyetAciklama: String;
-      constructor Create(kodu, adi: String);
-    end;
+    TVergi = class(TObject)public Matrah: Nullable<Currency>;
+    Kodu: String;
+    Adi: String;
+    Oran: Nullable<Double>;
+    Tutar: Currency;
+    MuafiyetKodu: String;
+    MuafiyetAciklama: String;
+    constructor Create(Kodu, Adi: String);
+    procedure Clone(out vergi: TVergi);
+  end;
+
+  TVergiler = class(TList)
+  private
+    function Get(Index: Integer): TVergi;
+  public
+    ToplamVergi: Currency;
+    destructor Destroy; override;
+    function Add(Value: TVergi): Integer;
+    property Items[Index: Integer]: TVergi read Get; default;
+    function MevcutMu(vergi: TVergi): TVergi;
+  end;
 
   TKalem = class
   public
@@ -90,9 +100,7 @@ type
     KalemTutar: Currency;
     UrunAdi: String;
     BirimFiyat: Currency;
-    KDV: TVergi;
-    OTV: TVergi;
-    ToplamVergi: Currency;
+    Vergiler: TVergiler;
   end;
 
   TKalemler = class(TList)
@@ -112,21 +120,55 @@ type
     Senaryo: TFaturaSenaryo;
     Tipi: TFaturaTipi;
     BelgePB: String;
+    Gonderici: TMuhatap;
     Alici: TMuhatap;
     Kalemler: TKalemler;
+    Vergiler: TVergiler;
     KalemToplamTutar: Currency;
     VergiDahilTutar: Currency;
     VergiHaricTutar: Currency;
     ToplamIndirim: Currency;
     OdenecekTutar: Currency;
+    procedure BaslikVergileriHesapla;
   end;
 
 implementation
 
-constructor TVergi.Create(kodu, adi: String);
+constructor TVergi.Create(Kodu, Adi: String);
 begin
-  self.Kodu := kodu;
-  self.Adi := adi;
+  self.Kodu := Kodu;
+  self.Adi := Adi;
+end;
+
+procedure TVergi.Clone(out vergi: TVergi);
+begin
+  vergi := TVergi.Create(self.Kodu, self.Adi);
+  if self.Matrah.HasValue then
+    vergi.Matrah := self.Matrah.Value;
+  if self.Oran.HasValue then
+    vergi.Oran := self.Oran.Value;
+  vergi.Tutar := self.Tutar;
+  vergi.MuafiyetKodu := self.MuafiyetKodu;
+  vergi.MuafiyetAciklama := self.MuafiyetAciklama;
+end;
+
+function TVergiler.Add(Value: TVergi): Integer;
+begin
+  Result := inherited Add(Value);
+end;
+
+destructor TVergiler.Destroy;
+var
+  i: Integer;
+begin
+  for i := 0 to Count - 1 do
+    Items[i].Free;
+  inherited;
+end;
+
+function TVergiler.Get(Index: Integer): TVergi;
+begin
+  Result := TVergi(inherited Get(Index));
 end;
 
 function TKalemler.Add(Value: TKalem): Integer;
@@ -146,6 +188,48 @@ end;
 function TKalemler.Get(Index: Integer): TKalem;
 begin
   Result := TKalem(inherited Get(Index));
+end;
+
+procedure TFatura.BaslikVergileriHesapla;
+var
+  mevcut, yeni: TVergi;
+  i, j: Integer;
+begin
+  if self.Kalemler = nil then
+    raise Exception.Create('Fatura kalemi bulunamadý!');
+  self.Vergiler := TVergiler.Create;
+  for i := 0 to self.Kalemler.Count -1 do
+    for j := 0 to self.Kalemler[i].Vergiler.Count-1 do
+    begin
+      mevcut := self.Vergiler.MevcutMu(self.Kalemler[i].Vergiler[j]);
+      if mevcut = nil then
+      begin
+        self.Kalemler[i].Vergiler[j].Clone(yeni);
+        self.Vergiler.Add(yeni);
+        self.Vergiler.ToplamVergi := self.Vergiler.ToplamVergi + yeni.Tutar;
+      end
+      else
+      begin
+        mevcut.Tutar := mevcut.Tutar + self.Kalemler[i].Vergiler[j].Tutar;
+        self.Vergiler.ToplamVergi := self.Vergiler.ToplamVergi + mevcut.Tutar;
+      end;
+    end;
+
+end;
+
+function TVergiler.MevcutMu(vergi: TVergi): TVergi;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to self.Count-1 do
+    if (self[i].Kodu = vergi.Kodu) and (self[i].Oran = vergi.Oran) and
+      (self[i].MuafiyetKodu = vergi.MuafiyetKodu) and
+      (self[i].MuafiyetAciklama = vergi.MuafiyetAciklama) then
+    begin
+      Result := self[i];
+      break;
+    end;
 end;
 
 end.

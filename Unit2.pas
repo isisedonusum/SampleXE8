@@ -36,6 +36,7 @@ procedure TForm2.Button1Click(Sender: TObject);
 var
   fatura: TFatura;
   kalem: TKalem;
+  vergi: TVergi;
 begin
   fatura := TFatura.Create;
   fatura.Senaryo := TFaturaSenaryo(GetEnumValue(TypeInfo(TFaturaSenaryo),
@@ -65,9 +66,18 @@ begin
   kalem.KalemTutar := 100;
   kalem.BirimFiyat := 21;
   kalem.IndirimTutar := 5;
-  kalem.KDV := TVergi.Create('0015', 'KDV');
-  kalem.KDV.Oran := 8;
+  kalem.Vergiler := TVergiler.Create;
+  //vergi
+  vergi :=  TVergi.Create('0015', 'KDV');
+  vergi.Oran := 8;
+  kalem.Vergiler.Add(vergi);
+  //vergi 2
+  vergi :=  TVergi.Create('0015', 'KDV');
+  vergi.Oran := 18;
+  kalem.Vergiler.Add(vergi);
   fatura.Kalemler.Add(kalem);
+  //baþlýk vergileri manuel de atanabilir
+  fatura.BaslikVergileriHesapla;
 
   CreateUblTr(fatura);
 end;

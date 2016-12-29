@@ -17,7 +17,7 @@ procedure KalemEkle(node: IXMLNode; kalem: TKalem; BelgePB: String);
 function CreateChildNode(node: IXMLNode; namespace, name: String): IXMLNode;
 procedure AddChildNode(node: IXMLNode; namespace, name, value: String);
 procedure MuhatapBilgileri(node: IXMLNode; muhatap: TMuhatap);
-procedure VergiEkle(node: IXMLNode; kalem: TKalem; BelgePB: String); overload;
+procedure VergiEkle(node: IXMLNode; vergiler: TVergiler; BelgePB: String); overload;
 procedure VergiEkle(node: IXMLNode; vergi: TVergi; BelgePB: String); overload;
 procedure DipToplam(node: IXMLNode; fatura: TFatura);
 procedure TutarDegistir(parent: IXMLNode; name, namespace, pb: String;
@@ -62,8 +62,9 @@ begin
   faturatipi.Text := GetEnumName(TypeInfo(TFaturaTipi), Ord(fatura.Tipi));
 
   // satýcý
-  // muhatap := TMuhatap.Create;
-  // MuhatapBilgileri(parent.ChildNodes.FindNode('AccountingSupplierParty', NS_cac), muhatap);
+  if fatura.Gonderici <> nil then
+    MuhatapBilgileri(parent.ChildNodes.FindNode('AccountingSupplierParty',
+      NS_cac), fatura.Gonderici);
 
   // müþteri
   MuhatapBilgileri(parent.ChildNodes.FindNode('AccountingCustomerParty',
@@ -74,6 +75,10 @@ begin
   new.Text := 'Fatura notu';
   new.Attributes['languageID'] := 'tr-TR';
   parent.ChildNodes.Insert(parent.ChildNodes.IndexOf(faturatipi) + 1, new);
+
+  // Vergiler
+  node := parent.ChildNodes.FindNode('TaxTotal', NS_cac);
+  VergiEkle(node, fatura.Vergiler, fatura.BelgePB);
 
   // Dip toplamlar
   DipToplam(parent, fatura);
@@ -258,7 +263,7 @@ begin
 
   // vergiler
   child := CreateChildNode(new, NS_cac, PR_cac + ':TaxTotal');
-  VergiEkle(child, kalem, BelgePB);
+  VergiEkle(child, kalem.Vergiler, BelgePB);
 
   // Detay
   child := CreateChildNode(new, NS_cac, PR_cac + ':Item');
@@ -299,17 +304,17 @@ begin
   // </cac:InvoiceLine>
 end;
 
-procedure VergiEkle(node: IXMLNode; kalem: TKalem; BelgePB: String);
+procedure VergiEkle(node: IXMLNode; vergiler: TVergiler; BelgePB: String);
 var
   child: IXMLNode;
+  i: Integer;
 begin
+  node.ChildNodes.Clear;
   child := CreateChildNode(node, NS_cbc, PR_cbc + ':TaxAmount');
-  child.Text := FloatToStr(kalem.ToplamVergi);
+  child.Text := FloatToStr(Vergiler.ToplamVergi);
   child.Attributes['currencyID'] := BelgePB;
-  // KDV
-  VergiEkle(node, kalem.KDV, BelgePB);
-  // OTV
-  VergiEkle(node, kalem.OTV, BelgePB);
+  for i := 0 to Vergiler.Count-1 do
+    VergiEkle(node, Vergiler[i], BelgePB);
   // <cbc:TaxAmount currencyID="TRL">90</cbc:TaxAmount>
 end;
 
