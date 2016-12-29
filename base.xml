@@ -72,24 +72,13 @@
 					<cbc:TaxTypeCode>0015</cbc:TaxTypeCode>
 				</cac:TaxScheme>
 			</cac:TaxCategory>
-		</cac:TaxSubtotal>
-		<cac:TaxSubtotal>
-			<cbc:TaxableAmount currencyID="TRL">500</cbc:TaxableAmount>
-			<cbc:TaxAmount currencyID="TRL">90</cbc:TaxAmount>
-			<cbc:Percent>19</cbc:Percent>
-			<cac:TaxCategory>
-				<cac:TaxScheme>
-					<cbc:Name>KDV</cbc:Name>
-					<cbc:TaxTypeCode>0015</cbc:TaxTypeCode>
-				</cac:TaxScheme>
-			</cac:TaxCategory>
-		</cac:TaxSubtotal>		
+		</cac:TaxSubtotal>	
 	</cac:TaxTotal>
 	<cac:LegalMonetaryTotal>
-		<cbc:LineExtensionAmount currencyID="TRL">500</cbc:LineExtensionAmount>
-		<cbc:TaxExclusiveAmount currencyID="TRL">500</cbc:TaxExclusiveAmount>
-		<cbc:TaxInclusiveAmount currencyID="TRL">590</cbc:TaxInclusiveAmount>
+		<cbc:LineExtensionAmount currencyID="TRL">0</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="TRL">0</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="TRL">0</cbc:TaxInclusiveAmount>
 		<cbc:AllowanceTotalAmount currencyID="TRL">0</cbc:AllowanceTotalAmount>
-		<cbc:PayableAmount currencyID="TRL">590</cbc:PayableAmount>
+		<cbc:PayableAmount currencyID="TRL">0</cbc:PayableAmount>
 	</cac:LegalMonetaryTotal>
 </Invoice>

@@ -19,6 +19,9 @@ procedure AddChildNode(node: IXMLNode; namespace, name, value: String);
 procedure MuhatapBilgileri(node: IXMLNode; muhatap: TMuhatap);
 procedure VergiEkle(node: IXMLNode; kalem: TKalem; BelgePB: String); overload;
 procedure VergiEkle(node: IXMLNode; vergi: TVergi; BelgePB: String); overload;
+procedure DipToplam(node: IXMLNode; fatura: TFatura);
+procedure TutarDegistir(parent: IXMLNode; name, namespace, pb: String;
+  value: Currency);
 
 implementation
 
@@ -35,7 +38,6 @@ var
   Uid: TGuid;
   ETTN: String;
 
-  muhatap: TMuhatap;
   i: Integer;
 begin
   doc := LoadXMLDocument('base.xml');
@@ -64,23 +66,17 @@ begin
   // MuhatapBilgileri(parent.ChildNodes.FindNode('AccountingSupplierParty', NS_cac), muhatap);
 
   // müþteri
-  muhatap := TMuhatap.Create;
-  muhatap.WebURI := 'http://www.isisbilisim.com.tr';
-  muhatap.VKNTCKN := '46603924300';
-  muhatap.Unvan := 'ISIS Biliþim Teknolojileri';
-  muhatap.Ilce := 'Ataþehir';
-  muhatap.Il := 'Ýstanbul';
-  muhatap.Ulke := 'Türkiye';
-  muhatap.UlkeKodu := 'TR';
-  muhatap.VergiDairesi := 'Ýlyasbey';
   MuhatapBilgileri(parent.ChildNodes.FindNode('AccountingCustomerParty',
-    NS_cac), muhatap);
+    NS_cac), fatura.Alici);
 
   // Fatura notu ekle
   new := doc.CreateElement(PR_cbc + ':Note', NS_cbc);
   new.Text := 'Fatura notu';
   new.Attributes['languageID'] := 'tr-TR';
   parent.ChildNodes.Insert(parent.ChildNodes.IndexOf(faturatipi) + 1, new);
+
+  // Dip toplamlar
+  DipToplam(parent, fatura);
 
   // Kalem ekle
   for i := 0 to fatura.Kalemler.Count - 1 do
@@ -339,9 +335,9 @@ begin
   // oran
   if vergi.Oran.HasValue then
     AddChildNode(child, NS_cbc, PR_cbc + ':Percent', FloatToStr(vergi.Oran));
-  //vergi bilgileri
+  // vergi bilgileri
   new := CreateChildNode(child, NS_cac, PR_cac + ':TaxCategory');
-  //muhafiyet bilgisi
+  // muhafiyet bilgisi
   if vergi.MuafiyetKodu <> '' then
   begin
     AddChildNode(new, NS_cbc, PR_cbc + ':TaxExemptionReasonCode',
@@ -365,6 +361,35 @@ begin
   // / </cac:TaxScheme>
   // </cac:TaxCategory>
   // </cac:TaxSubtotal>
+end;
+
+procedure DipToplam(node: IXMLNode; fatura: TFatura);
+var
+  child: IXMLNode;
+begin
+  child := node.ChildNodes.FindNode('LegalMonetaryTotal', NS_cac);
+  TutarDegistir(child, 'LineExtensionAmount', NS_cbc, fatura.BelgePB,
+    fatura.KalemToplamTutar);
+  TutarDegistir(child, 'TaxExclusiveAmount', NS_cbc, fatura.BelgePB,
+    fatura.VergiHaricTutar);
+  TutarDegistir(child, 'TaxInclusiveAmount', NS_cbc, fatura.BelgePB,
+    fatura.VergiDahilTutar);
+  TutarDegistir(child, 'AllowanceTotalAmount', NS_cbc, fatura.BelgePB,
+    fatura.ToplamIndirim);
+  TutarDegistir(child, 'PayableAmount', NS_cbc, fatura.BelgePB,
+    fatura.OdenecekTutar);
+end;
+
+procedure TutarDegistir(parent: IXMLNode; name, namespace, pb: String;
+  value: Currency);
+var
+  node: IXMLNode;
+begin
+  node := parent.ChildNodes.FindNode(name, namespace);
+  if node = nil then
+    exit;
+  node.Text := FloatToStr(value);
+  node.Attributes['currencyID'] := pb;
 end;
 
 end.

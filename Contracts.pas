@@ -114,6 +114,11 @@ type
     BelgePB: String;
     Alici: TMuhatap;
     Kalemler: TKalemler;
+    KalemToplamTutar: Currency;
+    VergiDahilTutar: Currency;
+    VergiHaricTutar: Currency;
+    ToplamIndirim: Currency;
+    OdenecekTutar: Currency;
   end;
 
 implementation

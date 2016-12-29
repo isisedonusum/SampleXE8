@@ -38,15 +38,27 @@ var
   kalem: TKalem;
 begin
   fatura := TFatura.Create;
-  fatura.Senaryo := TFaturaSenaryo(GetEnumValue(TypeInfo(TFaturaSenaryo), cbProfileID.Items[cbProfileID.ItemIndex]));
-  fatura.Tipi := TFaturaTipi(GetEnumValue(TypeInfo(TFaturaTipi), cbInvoiceType.Items[cbInvoiceType.ItemIndex]));
+  fatura.Senaryo := TFaturaSenaryo(GetEnumValue(TypeInfo(TFaturaSenaryo),
+    cbProfileID.Items[cbProfileID.ItemIndex]));
+  fatura.Tipi := TFaturaTipi(GetEnumValue(TypeInfo(TFaturaTipi),
+    cbInvoiceType.Items[cbInvoiceType.ItemIndex]));
   fatura.BelgePB := 'TRY';
 
-  //fatura kalemleri
+  // Alýcý
+  fatura.Alici := TMuhatap.Create;
+  fatura.Alici.WebURI := 'http://www.isisbilisim.com.tr';
+  fatura.Alici.VKNTCKN := '46603924300';
+  fatura.Alici.Unvan := 'ISIS Biliþim Teknolojileri';
+  fatura.Alici.Ilce := 'Ataþehir';
+  fatura.Alici.Il := 'Ýstanbul';
+  fatura.Alici.Ulke := 'Türkiye';
+  fatura.Alici.UlkeKodu := 'TR';
+  fatura.Alici.VergiDairesi := 'Ýlyasbey';
+
+  // fatura kalemleri
   fatura.Kalemler := TKalemler.Create;
   kalem := TKalem.Create;
-  //kalem numarasý 1'den baþlar
-  kalem.KalemNo := 1;
+  kalem.KalemNo := 1; // kalem numarasý 1'den baþlar
   kalem.UrunAdi := 'e-Fatura';
   kalem.Miktar := 5;
   kalem.OlcuBirimi := TOlcuBirimleri.C62;
@@ -54,7 +66,6 @@ begin
   kalem.BirimFiyat := 21;
   kalem.IndirimTutar := 5;
   kalem.KDV := TVergi.Create('0015', 'KDV');
-  kalem.KDV.Oran := 8;
   kalem.KDV.Oran := 8;
   fatura.Kalemler.Add(kalem);
 
@@ -66,12 +77,12 @@ var
   i: Integer;
 begin
   cbProfileID.Items.Clear;
-  for i :=  Ord(Low(TFaturaSenaryo)) to Ord(High(TFaturaSenaryo)) do
+  for i := Ord(Low(TFaturaSenaryo)) to Ord(High(TFaturaSenaryo)) do
     cbProfileID.Items.Add(GetEnumName(TypeInfo(TFaturaSenaryo), i));
   cbProfileID.ItemIndex := 0;
 
   cbInvoiceType.Items.Clear;
-  for i :=  Ord(Low(TFaturaTipi)) to Ord(High(TFaturaTipi)) do
+  for i := Ord(Low(TFaturaTipi)) to Ord(High(TFaturaTipi)) do
     cbInvoiceType.Items.Add(GetEnumName(TypeInfo(TFaturaTipi), i));
   cbInvoiceType.ItemIndex := 0;
 end;
