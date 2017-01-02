@@ -1,23 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899/12/30 00:00:00.000.483,C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\EInvoiceEasy.pas=D:\Deneme\XE8\Test\EInvoiceEasy.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.536,=C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\EInvoiceEasy.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.624,C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\Deneme\XE8\Test\Project1.dproj</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.930,C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\Deneme\XE8\Test\Unit1.dfm</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.930,D:\Deneme\XE8\Test\Unit1.pas=C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.624,D:\Deneme\XE8\Test\Project1.dproj=C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.483,D:\Deneme\XE8\Test\EInvoiceEasy.pas=C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\EInvoiceEasy.pas</Transaction>
     <Transaction>1899/12/30 00:00:00.000.059,=C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>1899/12/30 00:00:00.000.930,C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\Deneme\XE8\Test\Unit1.pas</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.536,=C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\EInvoiceEasy.pas</Transaction>
+    <Transaction>1899/12/30 00:00:00.000.930,D:\Deneme\XE8\Test\Unit1.dfm=C:\Users\mustafa.yilmaz\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
     <Transaction>2016/11/22 14:37:01.000.670,=D:\Deneme\XE8\EInvoiceEasy\base.xml</Transaction>
     <Transaction>2016/11/22 14:37:28.000.679,=D:\Deneme\XE8\EInvoiceEasy\Unit2.pas</Transaction>
     <Transaction>2016/12/05 13:28:55.000.427,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\TaxPayerQuery.pas</Transaction>
     <Transaction>2016/12/05 13:29:44.000.563,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit3.pas</Transaction>
     <Transaction>2016/12/27 23:52:19.000.688,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit4.pas</Transaction>
     <Transaction>2016/12/28 10:16:47.000.383,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas</Transaction>
-    <Transaction>2016/12/28 10:17:09.000.588,C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Contracts.pas=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas</Transaction>
+    <Transaction>2016/12/28 10:17:09.000.588,C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Contracts.pas</Transaction>
     <Transaction>2016/12/28 11:27:21.000.778,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas</Transaction>
-    <Transaction>2016/12/28 11:27:36.000.186,C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\UblTr.pas=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas</Transaction>
+    <Transaction>2016/12/28 11:27:36.000.186,C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\UblTr.pas</Transaction>
     <Transaction>2016/12/29 08:44:03.000.343,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas</Transaction>
-    <Transaction>2016/12/29 08:44:45.000.606,C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Types.pas=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas</Transaction>
-    <Transaction>2016/12/29 08:47:59.000.423,C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\tr.com.isisbilisim.types.pas=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Types.pas</Transaction>
+    <Transaction>2016/12/29 08:44:45.000.606,C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Unit5.pas=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Types.pas</Transaction>
+    <Transaction>2016/12/29 08:47:59.000.423,C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\Types.pas=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\tr.com.isisbilisim.types.pas</Transaction>
+    <Transaction>2017/01/02 12:54:39.454,=C:\Users\mustafa.yilmaz\Desktop\sil\SampleXE8\GeneralWithCss.xslt</Transaction>
   </Transactions>
 </BorlandProject>

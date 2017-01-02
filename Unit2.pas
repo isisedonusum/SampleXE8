@@ -53,12 +53,16 @@ var
   vergi: TVergi;
 begin
   fatura := TFatura.Create;
+  fatura.Tarih := Date;
   fatura.No := txNo.Text;
   fatura.Senaryo := TFaturaSenaryo(GetEnumValue(TypeInfo(TFaturaSenaryo),
     cbProfileID.Items[cbProfileID.ItemIndex]));
   fatura.Tipi := TFaturaTipi(GetEnumValue(TypeInfo(TFaturaTipi),
     cbInvoiceType.Items[cbInvoiceType.ItemIndex]));
   fatura.BelgePB := 'TRY';
+
+  //fatura görseli
+  fatura.Gorsel := 'GeneralWithCss.xslt';
 
   // Alýcý
   fatura.Alici := TMuhatap.Create;

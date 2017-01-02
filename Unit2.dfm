@@ -90,7 +90,6 @@ object Form2: TForm2
     Caption = 'Olu'#351'tur'
     TabOrder = 0
     OnClick = Button1Click
-    ExplicitTop = 266
   end
   object cbProfileID: TComboBox
     Left = 120
@@ -126,7 +125,6 @@ object Form2: TForm2
     Anchors = [akLeft, akBottom]
     TabOrder = 4
     Text = '0'
-    ExplicitTop = 193
   end
   object txNo: TMaskEdit
     Left = 120
@@ -146,7 +144,6 @@ object Form2: TForm2
     Anchors = [akLeft, akBottom]
     TabOrder = 6
     Text = '0'
-    ExplicitTop = 220
   end
   object txVergiDahilTutar: TEdit
     Left = 120
@@ -156,7 +153,6 @@ object Form2: TForm2
     Anchors = [akLeft, akBottom]
     TabOrder = 7
     Text = '0'
-    ExplicitTop = 247
   end
   object txToplamIndirim: TEdit
     Left = 120
@@ -166,7 +162,6 @@ object Form2: TForm2
     Anchors = [akLeft, akBottom]
     TabOrder = 8
     Text = '0'
-    ExplicitTop = 274
   end
   object txOdenecekTutar: TEdit
     Left = 120
@@ -176,6 +171,5 @@ object Form2: TForm2
     Anchors = [akLeft, akBottom]
     TabOrder = 9
     Text = '0'
-    ExplicitTop = 301
   end
 end

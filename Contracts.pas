@@ -118,9 +118,12 @@ type
   public
     No: String;
     ETTN: String;
+    Tarih: TDate;
+    Saat: TTime;
     Senaryo: TFaturaSenaryo;
     Tipi: TFaturaTipi;
     BelgePB: String;
+    Gorsel: TFileName;
     Gonderici: TMuhatap;
     Alici: TMuhatap;
     Kalemler: TKalemler;

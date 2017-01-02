@@ -3,7 +3,8 @@ unit UblTr;
 interface
 
 uses
-  Contracts, Xml.XMLIntf, Xml.XMLDoc, System.SysUtils, System.TypInfo;
+  Contracts, Xml.XMLIntf, Xml.XMLDoc, System.SysUtils, System.TypInfo,
+  System.Classes, EncdDecd;
 
 const
   PR_cbc = 'cbc';
@@ -23,6 +24,8 @@ procedure VergiEkle(node: IXMLNode; vergi: TVergi; BelgePB: String); overload;
 procedure DipToplam(node: IXMLNode; fatura: TFatura);
 procedure TutarDegistir(parent: IXMLNode; name, namespace, pb: String;
   value: Currency);
+procedure FaturaGorseli(node: IXMLNode; fatura: TFatura);
+function EncodeFile(const FileName: string): AnsiString;
 
 implementation
 
@@ -42,10 +45,15 @@ begin
   doc.Options := doc.Options + [doNodeAutoIndent];
   parent := doc.DocumentElement;
 
-  // ETTN
-  ChangeNode(parent, 'UUID', NS_cbc, fatura.ETTN);
   // fatura no
   ChangeNode(parent, 'ID', NS_cbc, fatura.No);
+
+  // ETTN
+  ChangeNode(parent, 'UUID', NS_cbc, fatura.ETTN);
+
+  // fatura tarihi
+  ChangeNode(parent, 'IssueDate', NS_cbc, FormatDateTime('yyyy-mm-dd',
+    fatura.Tarih));
 
   // fatura senaryosu
   node := parent.ChildNodes.FindNode('ProfileID', NS_cbc);
@@ -54,6 +62,9 @@ begin
   // fatura tipi
   faturatipi := parent.ChildNodes.FindNode('InvoiceTypeCode', NS_cbc);
   faturatipi.Text := GetEnumName(TypeInfo(TFaturaTipi), Ord(fatura.Tipi));
+
+  // fatura görseli
+  FaturaGorseli(parent, fatura);
 
   // satýcý
   if fatura.Gonderici <> nil then
@@ -399,6 +410,59 @@ begin
     exit;
   node.Text := FloatToStr(value);
   node.Attributes['currencyID'] := pb;
+end;
+
+procedure FaturaGorseli(node: IXMLNode; fatura: TFatura);
+var
+  new, child: IXMLNode;
+begin
+  if fatura.Gorsel = '' then
+    exit;
+  new := CreateChildNode(node, NS_cac, PR_cac + ':AdditionalDocumentReference');
+
+  // gönderi bilgilerinden öncesine ekleyelim
+  node.ChildNodes.Insert(node.ChildNodes.IndexOf(node.ChildNodes.FindNode
+    ('AccountingSupplierParty', NS_cac)), new);
+
+  // görsel dosyasýný yükleyelim
+  AddChildNode(new, NS_cbc, PR_cbc + ':ID', '1');
+  AddChildNode(new, NS_cbc, PR_cbc + ':IssueDate', FormatDateTime('yyyy-mm-dd',
+    fatura.Tarih));
+  AddChildNode(new, NS_cbc, PR_cbc + ':DocumentTypeCode', 'XSLT');
+  AddChildNode(new, NS_cbc, PR_cbc + ':DocumentType', 'XSLT');
+  child := CreateChildNode(new, NS_cac, PR_cac + ':Attachment');
+  child := CreateChildNode(child, NS_cbc,
+    PR_cbc + ':EmbeddedDocumentBinaryObject');
+  child.Attributes['characterSetCode'] := 'UTF-8';
+  child.Attributes['encodingCode'] := 'Base64';
+  child.Attributes['filename'] := fatura.No + '.xslt';
+  child.Attributes['mimeCode'] := 'application/xml';
+  child.Text := EncodeFile(fatura.Gorsel);
+
+  // <cac:AdditionalDocumentReference>
+  // /		<cbc:ID>1</cbc:ID>
+  // /		<cbc:IssueDate>2016-12-30</cbc:IssueDate>
+  // /    <cbc:DocumentTypeCode>XSLT</cbc:DocumentTypeCode>
+  // /    <cbc:DocumentType>XSLT</cbc:DocumentType>
+  // /		<cac:Attachment>
+  // / /			<cbc:EmbeddedDocumentBinaryObject characterSetCode="UTF-8" encodingCode="Base64" filename="H552017000000017.xslt" mimeCode="application/xml">
+  // / /      Base64
+  // / /      </cbc:EmbeddedDocumentBinaryObject>
+  // /    </cac:Attachment>
+  // </cac:AdditionalDocumentReference>
+end;
+
+function EncodeFile(const FileName: string): AnsiString;
+var
+  stream: TMemoryStream;
+begin
+  stream := TMemoryStream.Create;
+  try
+    stream.LoadFromFile(FileName);
+    Result := EncodeBase64(stream.Memory, stream.Size);
+  finally
+    stream.Free;
+  end;
 end;
 
 end.
