@@ -14,11 +14,11 @@
 	<cbc:IssueDate>2013-11-29</cbc:IssueDate>
 	<cbc:IssueTime>14:44:09.9087966+02:00</cbc:IssueTime>
 	<cbc:InvoiceTypeCode>SATIS</cbc:InvoiceTypeCode>
-	<cbc:DocumentCurrencyCode>TRL</cbc:DocumentCurrencyCode>
-	<cbc:TaxCurrencyCode>TRL</cbc:TaxCurrencyCode>
-	<cbc:PricingCurrencyCode>TRL</cbc:PricingCurrencyCode>
-	<cbc:PaymentCurrencyCode>TRL</cbc:PaymentCurrencyCode>
-	<cbc:PaymentAlternativeCurrencyCode>TRL</cbc:PaymentAlternativeCurrencyCode>
+	<cbc:DocumentCurrencyCode>TRY</cbc:DocumentCurrencyCode>
+	<cbc:TaxCurrencyCode>TRY</cbc:TaxCurrencyCode>
+	<cbc:PricingCurrencyCode>TRY</cbc:PricingCurrencyCode>
+	<cbc:PaymentCurrencyCode>TRY</cbc:PaymentCurrencyCode>
+	<cbc:PaymentAlternativeCurrencyCode>TRY</cbc:PaymentAlternativeCurrencyCode>
 	<cbc:LineCountNumeric>1</cbc:LineCountNumeric>
 	<cac:AccountingSupplierParty>
 		<cac:Party>
@@ -61,10 +61,10 @@
 	</cac:AccountingCustomerParty>
 	<cac:PaymentTerms/>
 	<cac:TaxTotal>
-		<cbc:TaxAmount currencyID="TRL">90</cbc:TaxAmount>
+		<cbc:TaxAmount currencyID="TRY">90</cbc:TaxAmount>
 		<cac:TaxSubtotal>
-			<cbc:TaxableAmount currencyID="TRL">500</cbc:TaxableAmount>
-			<cbc:TaxAmount currencyID="TRL">90</cbc:TaxAmount>
+			<cbc:TaxableAmount currencyID="TRY">500</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="TRY">90</cbc:TaxAmount>
 			<cbc:Percent>18</cbc:Percent>
 			<cac:TaxCategory>
 				<cac:TaxScheme>
@@ -75,10 +75,10 @@
 		</cac:TaxSubtotal>	
 	</cac:TaxTotal>
 	<cac:LegalMonetaryTotal>
-		<cbc:LineExtensionAmount currencyID="TRL">0</cbc:LineExtensionAmount>
-		<cbc:TaxExclusiveAmount currencyID="TRL">0</cbc:TaxExclusiveAmount>
-		<cbc:TaxInclusiveAmount currencyID="TRL">0</cbc:TaxInclusiveAmount>
-		<cbc:AllowanceTotalAmount currencyID="TRL">0</cbc:AllowanceTotalAmount>
-		<cbc:PayableAmount currencyID="TRL">0</cbc:PayableAmount>
+		<cbc:LineExtensionAmount currencyID="TRY">0</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="TRY">0</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="TRY">0</cbc:TaxInclusiveAmount>
+		<cbc:AllowanceTotalAmount currencyID="TRY">0</cbc:AllowanceTotalAmount>
+		<cbc:PayableAmount currencyID="TRY">0</cbc:PayableAmount>
 	</cac:LegalMonetaryTotal>
 </Invoice>
