@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Soap.InvokeRegistry,
   Soap.Rio, Soap.SOAPHTTPClient, Winapi.WinInet, Soap.SOAPHTTPTrans,
   EInvoiceEasy,
-  System.Types, System.UITypes;
+  System.Types, System.UITypes, System.TypInfo;
 
 type
   TForm1 = class(TForm)
@@ -44,16 +44,22 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   Service: IEasy;
   Response: Contracts_ResponseType2;
-
+  MsgDlgType: TMsgDlgType;
 begin
   Service := PrepareService();
   try
     Response := Service.GetStatus(Edit3.Text, Contracts_DirectionType.OUTBOUND,
       Edit4.Text);
-    ShowMessage(Response.ID);
+    if Response.Status = Contracts_StatusType.ERROR then
+      MsgDlgType := mtError
+    else if Response.Status = Contracts_StatusType.PROCCESSING then
+      MsgDlgType := mtWarning
+    else
+      MsgDlgType := mtInformation;
+    MessageDlg(GetEnumName(TypeInfo(Contracts_StatusType), Ord(Response.Status)) + ': ' + Response.GIBMessage, MsgDlgType, [mbOK], 0);
   Except
     on E: Exception do
-      MessageDlg(E.Message, mtError, [mbOk], 0);
+      MessageDlg(E.Message, mtError, [mbOK], 0);
   end;
 end;
 
@@ -86,7 +92,7 @@ begin
     ShowMessage(Response.GIBMessage);
   Except
     on E: Exception do
-      MessageDlg(E.Message, mtError, [mbOk], 0);
+      MessageDlg(E.Message, mtError, [mbOK], 0);
   end;
 end;
 
